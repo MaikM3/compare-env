@@ -7,7 +7,7 @@ const { readdirSync, statSync } = require("fs");
  * @param {string} dir - The directory to start searching from
  * @returns {Array} Array of filepaths
  */
-function getFiles(dir) {
+const getFiles = (dir) => {
   const subdirs = readdirSync(dir);
   const files = subdirs.map((subdir) => {
     const path = resolve(dir, subdir);
@@ -16,4 +16,4 @@ function getFiles(dir) {
   return files.flat();
 }
 
-module.exports = getFiles;
+exports.getFiles = getFiles;
