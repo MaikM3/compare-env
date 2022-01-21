@@ -6,7 +6,7 @@
   "author": "Harry Turnbull",
   "license": "MIT",
   "dependencies": {
-    "chalk": "^5.0.0",
+    "chalk": "4.1.2",
     "commander": "^8.3.0",
     "conf": "^10.1.1",
     "inquirer": "^8.2.0"
