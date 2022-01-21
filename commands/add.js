@@ -39,7 +39,7 @@ const add = async () => {
     choices,
   }).catch(inquirerErrorHandler);
 
-  const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])];
+  const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])].sort();
   conf.set(ENV_FILES, uniqueEnvPaths);
 };
 
