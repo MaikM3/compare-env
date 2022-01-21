@@ -1,0 +1,8 @@
+{
+  "name": "compare-env",
+  "version": "1.0.0",
+  "description": "Compare .env files",
+  "main": "index.js",
+  "author": "Harry Turnbull",
+  "license": "MIT"
+}
