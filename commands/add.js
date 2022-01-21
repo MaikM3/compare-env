@@ -1,6 +1,10 @@
 const inquirer = require("inquirer");
 const getFiles = require("../utils/getFiles");
 
+const conf = new (require('conf'))()
+
+const ENV_FILES = 'compare-envs.envs.files'
+
 const add = async () => {
   const cwd = process.cwd();
   const cwdFilePrefix = `${cwd}/`;
@@ -13,9 +17,9 @@ const add = async () => {
   ]);
   const envFileMap = Object.fromEntries(envFileEntries);
 
-  const choice = await inquirer
+  const { chosenEnvs } = await inquirer
     .prompt({
-      name: "envs",
+      name: "chosenEnvs",
       message: "Choose any number of .env files to add\n",
       type: "checkbox",
       choices: Object.keys(envFileMap),
@@ -27,7 +31,14 @@ const add = async () => {
       console.error(error);
     });
 
-  console.log("choice :>> ", choice);
+  const storedEnvs = conf.get(ENV_FILES)
+  const envPathsToStore = chosenEnvs.map(chosenEnv => envFileMap[chosenEnv])
+
+  const uniqueEnvPaths = [...new Set([...(storedEnvs ? storedEnvs : []), ...envPathsToStore])]
+  conf.set(ENV_FILES, uniqueEnvPaths)
+
+  const check = conf.get(ENV_FILES)
+  console.log('check :>> ', check);
 };
 
 module.exports = add;
