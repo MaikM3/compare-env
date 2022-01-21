@@ -2,8 +2,9 @@
 
 const { program } = require("commander");
 const add = require("./commands/add");
+const compare = require("./commands/compare");
 
-// TODO - add a path to an .env file for later comparison. Will either take a
+// Add a path to an .env file for later comparison. Will either take a
 // path, or search from current directory to find .env files
 program
   .command('add')
@@ -16,7 +17,10 @@ program
 // TODO - paste an env to save and compare with later
 // program.command('paste')
 
-// TODO - compare two envs
-// program.command('compare')
+// Compare two envs
+program
+  .command('compare')
+  .description('Compare two .env files')
+  .action(compare)
 
 program.parse()
