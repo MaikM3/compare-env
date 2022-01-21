@@ -1,7 +1,7 @@
 const fs = require("fs");
 
 const readFileToArray = (filePath) => {
-  const file = fs.readFileToArraySync(filePath).toString();
+  const file = fs.readFileSync(filePath).toString();
   return file.split("\n");
 };
 
