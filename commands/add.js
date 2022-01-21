@@ -1,6 +1,7 @@
 const inquirer = require("inquirer");
 const { ENV_FILES } = require("../constants");
 const getFiles = require("../utils/getFiles");
+const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
 
 const conf = new (require("conf"))();
 
@@ -26,12 +27,7 @@ const add = async () => {
       type: "checkbox",
       choices,
     })
-    .catch((error) => {
-      if (error.isTtyError) {
-        console.error("Prompt couldn't be rendered in the current environment");
-      }
-      console.error(error);
-    });
+    .catch(inquirerErrorHandler);
 
   const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])];
   conf.set(ENV_FILES, uniqueEnvPaths);
