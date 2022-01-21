@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
 const { program } = require("commander");
-const add = require("./commands/add");
-const compare = require("./commands/compare");
+const { add } = require("./commands/add");
+const { compare } = require("./commands/compare");
 
 // Add a path to an .env file for later comparison. Will either take a
 // path, or search from current directory to find .env files

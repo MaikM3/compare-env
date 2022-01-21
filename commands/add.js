@@ -43,4 +43,4 @@ const add = async () => {
   conf.set(ENV_FILES, uniqueEnvPaths);
 };
 
-module.exports = add;
+exports.add = add;
