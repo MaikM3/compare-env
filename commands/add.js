@@ -1,9 +1,8 @@
 const inquirer = require("inquirer");
+const { ENV_FILES } = require("../constants");
 const getFiles = require("../utils/getFiles");
 
 const conf = new (require("conf"))();
-
-const ENV_FILES = "compareEnvs.envs.files";
 
 const add = async () => {
   const cwd = process.cwd();
@@ -36,9 +35,6 @@ const add = async () => {
 
   const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])];
   conf.set(ENV_FILES, uniqueEnvPaths);
-
-  const check = conf.get(ENV_FILES);
-  console.log("check :>> ", check);
 };
 
 module.exports = add;
