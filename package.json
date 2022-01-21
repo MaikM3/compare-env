@@ -9,5 +9,11 @@
     "chalk": "^5.0.0",
     "commander": "^8.3.0",
     "inquirer": "^8.2.0"
+  },
+  "scripts": {
+    "dev": "node ./index.js"
+  },
+  "bin": {
+    "compare-env": "./index.js"
   }
 }
