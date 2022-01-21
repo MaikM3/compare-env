@@ -1,4 +1,5 @@
 const chalk = require("chalk");
+const { prompt } = require("inquirer");
 const { ENV_FILES } = require("../constants");
 const { compareArrays } = require("../utils/compareArrays");
 const { getFiles } = require("../utils/getFiles");
@@ -31,14 +32,12 @@ const add = async () => {
     disabled: storedEnvs.includes(file) && "Already added",
   }));
 
-  const { chosenEnvs } = await inquirer
-    .prompt({
-      name: "chosenEnvs",
-      message: "Choose any number of .env files to add\n",
-      type: "checkbox",
-      choices,
-    })
-    .catch(inquirerErrorHandler);
+  const { chosenEnvs } = await prompt({
+    name: "chosenEnvs",
+    message: "Choose any number of .env files to add\n",
+    type: "checkbox",
+    choices,
+  }).catch(inquirerErrorHandler);
 
   const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])];
   conf.set(ENV_FILES, uniqueEnvPaths);
