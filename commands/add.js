@@ -1,6 +1,7 @@
-const inquirer = require("inquirer");
+const chalk = require("chalk");
 const { ENV_FILES } = require("../constants");
-const getFiles = require("../utils/getFiles");
+const { compareArrays } = require("../utils/compareArrays");
+const { getFiles } = require("../utils/getFiles");
 const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
 
 const conf = new (require("conf"))();
@@ -13,6 +14,16 @@ const add = async () => {
 
   const files = getFiles(cwd);
   const envFiles = files.filter((file) => file.includes(".env"));
+
+  const noNewEnvs = compareArrays(storedEnvs, envFiles);
+  if (noNewEnvs) {
+    console.log(
+      chalk.cyan.bold(
+        "No .env files exist within this directory that you haven't already added!"
+      )
+    );
+    return;
+  }
 
   const choices = envFiles.map((file) => ({
     name: file.replace(cwdFilePrefix, ""),
