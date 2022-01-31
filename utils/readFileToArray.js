@@ -13,7 +13,7 @@ const readFileToArray = async (filePath) => {
       return;
     } else throw error;
   });
-  return buffer && buffer.toString().split("\n");
+  return buffer && buffer.toString().split("\n").filter(Boolean).sort();
 };
 
 exports.readFileToArray = readFileToArray;
