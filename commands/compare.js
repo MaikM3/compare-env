@@ -1,5 +1,6 @@
 const { prompt } = require("inquirer");
 const { ENV_FILES } = require("../constants");
+const { compareEnvFiles } = require("../utils/compareEnvFiles");
 const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
 const { readFileToArray } = require("../utils/readFileToArray");
 
@@ -21,8 +22,14 @@ const compare = async () => {
   }));
   const secondEnv = await selectEnv(remainingEnvs);
 
-  const firstFile = readFileToArray(firstEnv)
-  const secondFile = readFileToArray(secondEnv)
+  const firstFile = await readFileToArray(firstEnv);
+  const secondFile = await readFileToArray(secondEnv);
+  if (!firstFile || !secondFile) return;
+
+  compareEnvFiles(
+    { name: firstEnv, file: firstFile },
+    { name: secondEnv, file: secondFile }
+  );
 };
 
 const selectEnv = async (choices) => {
