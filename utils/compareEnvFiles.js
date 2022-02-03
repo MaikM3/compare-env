@@ -64,7 +64,7 @@ const compareEnvFiles = (env1, env2) => {
 
   const uniqueKeysInEnv2 = transformedFile2.filter(
     ([key2]) => !transformedFile1.find(([key1]) => key2 === key1)
-  );
+  ).map(([key, value]) => [key, "", value]);
 
   table.push(createHeader(`Unique keys in ${env2.name}`));
   table.push(...uniqueKeysInEnv2);
