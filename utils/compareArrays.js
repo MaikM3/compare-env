@@ -1,5 +1,5 @@
 /**
- * Predicte that compares two arrays containing strings/numbers. Will not handle
+ * Predicate that compares two arrays containing strings/numbers. Will not handle
  * deep object or array comparison.
  *
  * @param {Array} arr1 - The first array
