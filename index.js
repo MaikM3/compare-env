@@ -11,12 +11,6 @@ program
   .description("Add an .env file for comparison")
   .action(add);
 
-// TODO - not sure what find does, might be rolled together with add
-// program.command('find')
-
-// TODO - paste an env to save and compare with later
-// program.command('paste')
-
 // Compare two envs
 program
   .command("compare")
