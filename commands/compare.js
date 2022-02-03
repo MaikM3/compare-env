@@ -7,6 +7,10 @@ const { readFileToArray } = require("../utils/readFileToArray");
 
 const conf = new (require("conf"))();
 
+process.env.EDITOR = "nano";
+
+const PASTE_CHOICE = "Paste .env file contents";
+
 const compare = async () => {
   const storedEnvs = conf.get(ENV_FILES) || [];
 
@@ -24,23 +28,25 @@ const compare = async () => {
   }));
 
   const firstEnv = await selectEnv(storedEnvChoices);
+  const firstFile = await fetchOrPasteEnv(firstEnv);
+
   const remainingEnvChoices = storedEnvChoices.map((env) => ({
     ...env,
     disabled: env.value === firstEnv,
   }));
-  const secondEnv = await selectEnv(remainingEnvChoices);
 
-  const firstFile = await readFileToArray(firstEnv);
-  const secondFile = await readFileToArray(secondEnv);
+  const secondEnv = await selectEnv(remainingEnvChoices);
+  const secondFile = await fetchOrPasteEnv(secondEnv);
+
   if (!firstFile || !secondFile) return;
 
   compareEnvFiles(
     {
-      name: storedEnvChoices.find((choice) => choice.value === firstEnv).name,
+      name: storedEnvChoices.find((choice) => choice.value === firstEnv)?.name || 'First env (pasted)',
       file: firstFile,
     },
     {
-      name: storedEnvChoices.find((choice) => choice.value === secondEnv).name,
+      name: storedEnvChoices.find((choice) => choice.value === secondEnv)?.name || 'Second env (pasted)',
       file: secondFile,
     }
   );
@@ -51,9 +57,23 @@ const selectEnv = async (choices) => {
     name: "choice",
     message: "Select an env file to compare",
     type: "list",
-    choices,
+    choices: [...choices, PASTE_CHOICE],
   }).catch(inquirerErrorHandler);
   return choice;
 };
+
+const pasteEnv = async () => {
+  const { paste } = await prompt({
+    name: "paste",
+    message: "Paste in an .env file",
+    type: "editor",
+  }).catch(inquirerErrorHandler);
+  return paste;
+};
+
+const fetchOrPasteEnv = async (env) =>
+  env === PASTE_CHOICE
+    ? (await pasteEnv()).split("\n").filter(Boolean).sort()
+    : await readFileToArray(env);
 
 exports.compare = compare;
