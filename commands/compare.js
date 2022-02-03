@@ -1,6 +1,7 @@
 const { prompt } = require("inquirer");
 const { ENV_FILES } = require("../constants");
 const { compareEnvFiles } = require("../utils/compareEnvFiles");
+const { comparePaths } = require("../utils/comparePaths");
 const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
 const { readFileToArray } = require("../utils/readFileToArray");
 
@@ -15,20 +16,33 @@ const compare = async () => {
     );
   }
 
-  const firstEnv = await selectEnv(storedEnvs);
-  const remainingEnvs = storedEnvs.map((env) => ({
-    value: env,
-    disabled: env === firstEnv,
+  const comparedPaths = comparePaths(storedEnvs);
+
+  const storedEnvChoices = comparedPaths.map((comparedPath, index) => ({
+    name: comparedPath,
+    value: storedEnvs[index],
   }));
-  const secondEnv = await selectEnv(remainingEnvs);
+
+  const firstEnv = await selectEnv(storedEnvChoices);
+  const remainingEnvChoices = storedEnvChoices.map((env) => ({
+    ...env,
+    disabled: env.value === firstEnv,
+  }));
+  const secondEnv = await selectEnv(remainingEnvChoices);
 
   const firstFile = await readFileToArray(firstEnv);
   const secondFile = await readFileToArray(secondEnv);
   if (!firstFile || !secondFile) return;
 
   compareEnvFiles(
-    { name: firstEnv, file: firstFile },
-    { name: secondEnv, file: secondFile }
+    {
+      name: storedEnvChoices.find((choice) => choice.value === firstEnv).name,
+      file: firstFile,
+    },
+    {
+      name: storedEnvChoices.find((choice) => choice.value === secondEnv).name,
+      file: secondFile,
+    }
   );
 };
 
