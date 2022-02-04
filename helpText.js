@@ -28,7 +28,8 @@ If the current working directory is ${chalk.green(
 The absolute paths to the selected .env files will be registered for use with the compare command.
 
 Example:
-  compare-env add`;
+  compare-env add
+  compare-env a`;
 
 const compareHelpText = `
 The compare command will allow you to choose any registered .env files, or paste contents on an .env file, for comparison.  
@@ -61,7 +62,41 @@ If the current working directory is ${chalk.green(
 After selecting (or pasting in) two .env files, the files will be read and compared.
 
 Example:
-  compare-env compare`;
+  compare-env compare
+  compare-env c`;
+
+const removeHelpText = `
+The remove command will allow you to choose any registered .env files to remove from registration.  
+
+The paths to the .env files will be relative to the current working directory.
+
+For example, given a file structure:
+${chalk.green(`Users/
+├─ your.user/
+│  ├─ projects/
+│  │  ├─ project1/
+│  │  │  ├─ .env          ${chalk.white("(registered)")}
+│  │  │  ├─ .env.template 
+│  │  ├─ project2/
+│  │  │  ├─ .env          ${chalk.white("(registered)")}
+│  │  │  ├─ .env.template`)}
+
+If the current working directory is ${chalk.green(
+  "/Users/your.user/projects/"
+)}, the compare command will present the registered .env files as:
+- ${chalk.green("project1/.env")}
+- ${chalk.green("project2/.env")}
+
+If the current working directory is ${chalk.green(
+  "/Users/your.user/projects/project1"
+)}, the compare command will present the registered .env files as:
+- ${chalk.green(".env")}
+- ${chalk.green("../project2/.env")}
+
+Example:
+  compare-env remove
+  compare-env r`;
 
 exports.addHelpText = addHelpText;
 exports.compareHelpText = compareHelpText;
+exports.removeHelpText = removeHelpText;

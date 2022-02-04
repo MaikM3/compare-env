@@ -4,6 +4,7 @@ const { program } = require("commander");
 const { addHelpText, compareHelpText } = require("./helpText");
 const { add } = require("./commands/add");
 const { compare } = require("./commands/compare");
+const { remove } = require("./commands/remove");
 const packageJson = require("./package.json");
 
 program
@@ -17,6 +18,12 @@ program
   .description("Discover and add .env files for comparison")
   .action(add)
   .addHelpText("after", addHelpText);
+
+program
+  .command("remove")
+  .alias("r")
+  .description("Remove an .env file for comparison")
+  .action(remove)
 
 program
   .command("compare")
