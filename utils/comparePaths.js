@@ -27,7 +27,7 @@ const comparePaths = (envPaths) => {
 
   let replacedEnvPaths = splitenvPaths.map(() => []);
 
-  longestPath.forEach((_segment, index) => {
+  longestPath.forEach((segment, index) => {
     const correspondingSegments = splitenvPaths.map(
       (splitPath) => splitPath[index]
     );
@@ -35,7 +35,8 @@ const comparePaths = (envPaths) => {
     const allSegmentsTheSame = new Set(correspondingSegments).size === 1;
 
     if (allSegmentsTheSame) {
-      replacedEnvPaths.forEach((envPath) => envPath.push(".."));
+      const firstTwoCharactersOfSegment = segment.slice(0, 2)
+      replacedEnvPaths.forEach((envPath) => envPath.push(firstTwoCharactersOfSegment));
     } else {
       replacedEnvPaths.forEach((envPath, index) => {
         const correspondingSegment = correspondingSegments[index];
