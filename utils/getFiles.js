@@ -8,12 +8,17 @@ const { readdirSync, statSync } = require("fs");
  * @returns {Array} Array of filepaths
  */
 const getFiles = (dir) => {
-  const subdirs = readdirSync(dir);
-  const files = subdirs.map((subdir) => {
-    const path = resolve(dir, subdir);
-    return (statSync(path)).isDirectory() ? getFiles(path) : path;
-  });
-  return files.flat();
+  try {
+    const subdirs = readdirSync(dir);
+    const files = subdirs.map((subdir) => {
+      const path = resolve(dir, subdir);
+      return (statSync(path)).isDirectory() ? getFiles(path) : path;
+    });
+    return files.flat();
+  } catch (error) {
+    console.log(error.message);
+    return []
+  }
 }
 
 exports.getFiles = getFiles;
