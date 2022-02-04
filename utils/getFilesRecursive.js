@@ -7,12 +7,12 @@ const { readdirSync, statSync } = require("fs");
  * @param {string} dir - The directory to start searching from
  * @returns {Array} Array of filepaths
  */
-const getFiles = (dir) => {
+const getFilesRecursive = (dir) => {
   try {
     const subdirs = readdirSync(dir);
     const files = subdirs.map((subdir) => {
       const path = resolve(dir, subdir);
-      return (statSync(path)).isDirectory() ? getFiles(path) : path;
+      return (statSync(path)).isDirectory() ? getFilesRecursive(path) : path;
     });
     return files.flat();
   } catch (error) {
@@ -21,4 +21,4 @@ const getFiles = (dir) => {
   }
 }
 
-exports.getFiles = getFiles;
+exports.getFilesRecursive = getFilesRecursive;

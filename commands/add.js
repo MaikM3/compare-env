@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const { prompt } = require("inquirer");
 const { ENV_FILES } = require("../constants");
 const { compareArrays } = require("../utils/compareArrays");
-const { getFiles } = require("../utils/getFiles");
+const { getFilesRecursive } = require("../utils/getFilesRecursive");
 const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
 
 const conf = new (require("conf"))();
@@ -13,7 +13,7 @@ const add = async () => {
 
   const storedEnvs = conf.get(ENV_FILES) || [];
 
-  const files = getFiles(cwd);
+  const files = getFilesRecursive(cwd);
   const envFiles = files.filter((file) => file.includes(".env"));
 
   const noNewEnvs = compareArrays(storedEnvs, envFiles);
