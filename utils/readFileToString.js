@@ -3,7 +3,7 @@ const fs = require("fs");
 const { promisify } = require("util");
 const readFile = promisify(fs.readFile);
 
-const readFileToArray = async (filePath) => {
+const readFileToString = async (filePath) => {
   const buffer = await readFile(filePath).catch((error) => {
     if (error.message.includes("ENOENT: no such file or directory")) {
       console.log(
@@ -13,7 +13,7 @@ const readFileToArray = async (filePath) => {
       return;
     } else throw error;
   });
-  return buffer && buffer.toString().split("\n").filter(Boolean).sort();
+  return buffer && buffer.toString();
 };
 
-exports.readFileToArray = readFileToArray;
+exports.readFileToString = readFileToString;

@@ -3,7 +3,7 @@ const { ENV_FILES } = require("../constants");
 const { compareEnvFiles } = require("../utils/compareEnvFiles");
 const { comparePaths } = require("../utils/comparePaths");
 const { inquirerErrorHandler } = require("../utils/inquirerErrorHandler");
-const { readFileToArray } = require("../utils/readFileToArray");
+const { readFileToString } = require("../utils/readFileToString");
 
 const conf = new (require("conf"))();
 
@@ -72,9 +72,10 @@ const pasteEnv = async () => {
   return paste;
 };
 
-const fetchOrPasteEnv = async (env) =>
-  env === PASTE_CHOICE
-    ? (await pasteEnv()).split("\n").filter(Boolean).sort()
-    : await readFileToArray(env);
+const fetchOrPasteEnv = async (env) => {
+  const fileString =
+    env === PASTE_CHOICE ? await pasteEnv() : await readFileToString(env);
+  return fileString.split("\n").filter(Boolean).sort();
+};
 
 exports.compare = compare;
