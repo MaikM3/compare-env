@@ -42,13 +42,13 @@ const compare = async () => {
     {
       name:
         storedEnvChoices.find((choice) => choice.value === firstEnv)?.name ||
-        "First env (pasted)",
+        "First .env (pasted)",
       file: firstFile,
     },
     {
       name:
         storedEnvChoices.find((choice) => choice.value === secondEnv)?.name ||
-        "Second env (pasted)",
+        "Second .env (pasted)",
       file: secondFile,
     }
   );
