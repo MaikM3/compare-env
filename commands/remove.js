@@ -1,3 +1,4 @@
+const chalk = require("chalk");
 const { prompt } = require("inquirer");
 const { ENV_FILES } = require("../constants");
 const { comparePaths } = require("../utils/comparePaths");
@@ -7,6 +8,11 @@ const conf = new (require("conf"))();
 
 const remove = async () => {
   const storedEnvs = conf.get(ENV_FILES) || [];
+
+  if (!storedEnvs.length) {
+    console.log(chalk.blue.bold("No .env files have been added yet!"));
+    return
+  }
 
   const comparedPaths = comparePaths(storedEnvs);
 
@@ -23,7 +29,9 @@ const remove = async () => {
     loop: false,
   }).catch(inquirerErrorHandler);
 
-  const filteredEnvPaths = storedEnvs.filter(storedEnv => !chosenEnvs.includes(storedEnv));
+  const filteredEnvPaths = storedEnvs.filter(
+    (storedEnv) => !chosenEnvs.includes(storedEnv)
+  );
   conf.set(ENV_FILES, filteredEnvPaths);
 };
 
