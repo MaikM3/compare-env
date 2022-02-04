@@ -16,6 +16,16 @@
     "dev": "node ./index.js"
   },
   "bin": {
-    "compare-env": "./index.js"
-  }
+    "compare-env": "index.js"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hturnbull93/compare-env.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hturnbull93/compare-env/issues"
+  },
+  "homepage": "https://github.com/hturnbull93/compare-env",
+  "keywords": ["environment", "compare", "cli"]
 }
