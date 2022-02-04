@@ -81,26 +81,3 @@ const createHeader = (text) => [
     hAlign: "center",
   },
 ];
-
-// create a dict with ALL keys that appear in all envs, then go through and add
-// their values as keys on those keys
-
-/*
-
-I want to create something that highlights:
-
-| key    | .env1    | .env2    |
-| Shared keys with same values |
-| A_B    | one      | one      |
-| E_F    |          |          |
-| Shared keys with different values |
-| C_D    | one      | two      |
-| Unique keys in .env1         |
-| G_H    | three               |
-| I_J    |                     |
-| Unique keys in .env2         |
-| K_L    | four                |
-| M_N    |                     |
-
-
-*/
