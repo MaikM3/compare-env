@@ -7,8 +7,6 @@ const { readFileToString } = require("../utils/readFileToString");
 
 const conf = new (require("conf"))();
 
-process.env.EDITOR = "nano";
-
 const PASTE_CHOICE = "Paste .env file contents";
 
 const compare = async () => {
@@ -32,7 +30,7 @@ const compare = async () => {
 
   const remainingEnvChoices = storedEnvChoices.map((env) => ({
     ...env,
-    disabled: env.value === firstEnv,
+    disabled: env.value === firstEnv && 'selected',
   }));
 
   const secondEnv = await selectEnv(remainingEnvChoices);
@@ -42,11 +40,15 @@ const compare = async () => {
 
   compareEnvFiles(
     {
-      name: storedEnvChoices.find((choice) => choice.value === firstEnv)?.name || 'First env (pasted)',
+      name:
+        storedEnvChoices.find((choice) => choice.value === firstEnv)?.name ||
+        "First env (pasted)",
       file: firstFile,
     },
     {
-      name: storedEnvChoices.find((choice) => choice.value === secondEnv)?.name || 'Second env (pasted)',
+      name:
+        storedEnvChoices.find((choice) => choice.value === secondEnv)?.name ||
+        "Second env (pasted)",
       file: secondFile,
     }
   );
@@ -55,7 +57,7 @@ const compare = async () => {
 const selectEnv = async (choices) => {
   const { choice } = await prompt({
     name: "choice",
-    message: "Select an env file to compare",
+    message: "Select an .env file to compare",
     type: "list",
     choices: [...choices, PASTE_CHOICE],
     loop: false,
@@ -66,7 +68,7 @@ const selectEnv = async (choices) => {
 const pasteEnv = async () => {
   const { paste } = await prompt({
     name: "paste",
-    message: "Paste in an .env file",
+    message: "Paste in, and edit .env contents. Save to the default temporary file.",
     type: "editor",
   }).catch(inquirerErrorHandler);
   return paste;
