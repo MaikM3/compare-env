@@ -1,6 +1,6 @@
 {
   "name": "compare-env",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "CLI to compare .env files",
   "main": "index.js",
   "author": "Harry Turnbull",
@@ -27,5 +27,9 @@
     "url": "https://github.com/hturnbull93/compare-env/issues"
   },
   "homepage": "https://github.com/hturnbull93/compare-env",
-  "keywords": ["environment", "compare", "cli"]
+  "keywords": [
+    "environment",
+    "compare",
+    "cli"
+  ]
 }
