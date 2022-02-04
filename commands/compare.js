@@ -58,6 +58,7 @@ const selectEnv = async (choices) => {
     message: "Select an env file to compare",
     type: "list",
     choices: [...choices, PASTE_CHOICE],
+    loop: false,
   }).catch(inquirerErrorHandler);
   return choice;
 };

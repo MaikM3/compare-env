@@ -37,6 +37,7 @@ const add = async () => {
     message: "Choose any number of .env files to add\n",
     type: "checkbox",
     choices,
+    loop: false,
   }).catch(inquirerErrorHandler);
 
   const uniqueEnvPaths = [...new Set([...storedEnvs, ...chosenEnvs])].sort();
