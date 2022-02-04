@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const { program } = require("commander");
+const { addHelpText, compareHelpText } = require("./helpText");
 const { add } = require("./commands/add");
 const { compare } = require("./commands/compare");
 const packageJson = require("./package.json");
@@ -10,17 +11,18 @@ program
   .description(packageJson.description)
   .version(packageJson.version);
 
-// Add a path to an .env file for later comparison. Will either take a
-// path, or search from current directory to find .env files
 program
   .command("add")
-  .description("Add an .env file for comparison")
-  .action(add);
+  .alias("a")
+  .description("Discover and add .env files for comparison")
+  .action(add)
+  .addHelpText("after", addHelpText);
 
-// Compare two envs
 program
   .command("compare")
+  .alias("c")
   .description("Compare two .env files")
-  .action(compare);
+  .action(compare)
+  .addHelpText("after", compareHelpText);
 
 program.parse();
