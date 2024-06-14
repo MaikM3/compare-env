@@ -19,11 +19,23 @@ const compareEnvFiles = (env1, env2) => {
     transformedFile2.find(([key2]) => key1 === key2)
   );
 
-  const sharedKeyValues = sharedKeys.filter(([_key1, value1]) =>
-    transformedFile2.find(([_key2, value2]) => value1 === value2)
+  const sharedKeyValuesOther = sharedKeys.filter(([_key1, value1]) =>
+    transformedFile2.find(([_key2, value2]) => value1 === value2) 
   );
 
-  const sharedKeyValuesCells = sharedKeyValues.map(([key, value]) => [
+  try {
+    sharedKeyValuesOther.forEach(el => {
+      console.log('sharedKeyValues el', el)
+    });
+    sharedKeyValuesMaik = sharedKeyValuesOther.filter(([_key1, value1]) => !_key1.toString().startsWith('#'))
+    sharedKeyValuesMaik.forEach(el => {
+      console.log('sharedKeyValuesMaik el', el)
+    });
+  } catch (error) {
+    console.log('err: ',  error)
+  }
+
+  const sharedKeyValuesCells = sharedKeyValuesMaik.map(([key, value]) => [
     key,
     value,
     value,
